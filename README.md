@@ -1,6 +1,6 @@
 # Create Verilog LUTs from text files
 
-This tool will create a Verilog module representing a look up table from a text
+This tool will create a Verilog module representing a lookup table from a text
 file of numbers.
 
 It will automatically use the smallest required widths for the
@@ -12,12 +12,12 @@ printed to stdout if the width is smaller or larger than it needs to be.
 
 ```
 usage: veriloglut.py [-h] [-dft] [-n name] [-o output] [-r radix] [-w width]
-                     hexfile
+                     input
 
-Create a look-up-table in Verilog from a hex file
+Create a lookup table in Verilog from a hex file
 
 positional arguments:
-  hexfile               The path to the input HEX file
+  input                 The path to the input file
 
 optional arguments:
   -h, --help            show this help message and exit

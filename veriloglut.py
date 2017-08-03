@@ -87,14 +87,14 @@ def createLUT(moduleName, values, valueWidth, selWidth, writeDFT, comments=[]):
     return out
 
 def main(args):
-    if not os.path.isfile(args.hexfile):
-        error("cannot find file: {}".format(args.hexfile))
+    if not os.path.isfile(args.input):
+        error("cannot find file: {}".format(args.input))
     else:
-        with open(args.hexfile, "rb") as file:
+        with open(args.input, "rb") as file:
             values = readInput(file, args.radix)
 
         if not values:
-            error("did not find any values in {}".format(args.hexfile))
+            error("did not find any values in {}".format(args.input))
 
         # The largest width needed to represent the values in the input
         widthNeeded = sorted(values)[-1].bit_length()
@@ -123,11 +123,11 @@ def main(args):
         if args.name is not None:
             moduleName = args.name
         else:
-            moduleName = os.path.splitext(os.path.basename(args.hexfile))[0]
+            moduleName = os.path.splitext(os.path.basename(args.input))[0]
 
         module = createLUT(moduleName, values, valueWidth, selWidth, args.dft,
                            comments=["automatically generated from {}"
-                                        .format(args.hexfile),
+                                        .format(args.input),
                                      "$ {}".format(" ".join(sys.argv))])
 
         if args.output:
@@ -140,7 +140,7 @@ def main(args):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Create a look-up-table in"
+    parser = argparse.ArgumentParser(description="Create a lookup table in"
                                                   " Verilog from a hex file")
     parser.add_argument("-dft", required=False, action="store_true",
                         help="If specified the synopsys DFT ports will"
@@ -160,8 +160,8 @@ if __name__ == '__main__':
                                        " values in bits. If not set it will"
                                        " automatically be set to the width of"
                                        " the largest value of the input")
-    parser.add_argument("hexfile", metavar="hexfile", type=str,
-                        help="The path to the input HEX file")
+    parser.add_argument("input", metavar="input", type=str,
+                        help="The path to the input file")
     args = parser.parse_args()
 
     main(args)
